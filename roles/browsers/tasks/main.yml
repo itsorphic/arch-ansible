@@ -5,7 +5,14 @@
   tags:
     - firefox
 
+- name: Check if Brave is already installed
+  command: which brave
+  register: brave_installed
+  ignore_errors: yes
+  changed_when: false
+
 - name: Install Brave
   become: true
   become_user: "{{ user.name }}"
-  command: paru -S brave
+  command: paru -S brave-bin
+  when: brave_installed.rc != 0

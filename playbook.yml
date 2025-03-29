@@ -16,4 +16,3 @@
     - { role: browsers, tags: ['browsers'] }
     - { role: windowmanager, tags: ['windowmanager'] }
     - { role: keepass, tags: ['keepass'] }
-    - { role: sound, tags: ['sound'] }

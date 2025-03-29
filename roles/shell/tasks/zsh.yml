@@ -9,3 +9,8 @@
       - zsh-autosuggestions
     state: present
   notify: change shell
+
+- name: Install pure prompt for zsh
+  git:
+    repo: https://github.com/sindresorhus/pure.git
+    dest: /home/{{ user.name }}/.zsh/pure
