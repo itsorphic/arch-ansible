@@ -1,0 +1,4 @@
+---
+
+- name: Install Cosmic DE
+  import_tasks: cosmic.yml

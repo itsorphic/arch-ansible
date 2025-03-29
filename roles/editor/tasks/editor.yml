@@ -1,0 +1,11 @@
+---
+
+- name: Install vscode
+  pacman:
+    name: vscode
+
+- name: Install vim
+  pacman:
+    name:
+      - neovim
+      - vim

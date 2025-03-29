@@ -1,0 +1,80 @@
+---
+
+- name: Pacman mirrorlist setup
+  template:
+    src: mirrorlist.j2
+    dest: /etc/pacman.d/
+    mode: 0644
+    group: root
+
+- name: Pacman config setup
+  template:
+    src: pacman.conf.j2
+    dest: /etc/pacman.conf
+
+- name: Update pacman package cache
+  pacman:
+    update_cache: true
+
+- name: Perform full system upgrade
+  pacman:
+    update_cache: true
+    upgrade: true
+
+- name: Install base packages
+  community.general.pacman:
+    name: "{{ base_packages }}"
+    state: present
+
+- name: Check if paru is already installed
+  command: which paru
+  register: paru_check
+  failed_when: false
+  changed_when: false
+
+- name: Create temporary directory for paru build
+  file:
+    path: /tmp/paru-build
+    state: directory
+    owner: "{{ user.name }}"
+    group: aurbuilder
+    mode: '0755'
+  when: paru_check.rc != 0
+
+- name: Clone paru repository
+  git:
+    repo: https://aur.archlinux.org/paru.git
+    dest: /tmp/paru-build
+    version: master
+  when: paru_check.rc != 0
+
+- name: Build and install paru
+  become: true
+  become_user: "{{ user.name }}"
+  shell: |
+    cd /tmp/paru-build
+    makepkg -si --noconfirm
+  args:
+    executable: /bin/bash
+  when: paru_check.rc != 0
+
+- name: Clean up build directory
+  file:
+    path: /tmp/paru-build
+    state: absent
+  when: paru_check.rc != 0
+
+- name: Install microcode updates for intel (if necessary)
+  pacman:
+    name: intel-ucode
+    state: present
+  when: system.processor == "intel"
+
+- name: Install microcode updates for amd (if necessary)
+  pacman:
+    name: amd-ucode
+    state: present
+  when: system.processor == "amd"
+
+- name: Enable paccache timer
+  service: name=paccache.timer state=started enabled=true

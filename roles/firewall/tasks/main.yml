@@ -1,0 +1,25 @@
+---
+
+- name: Install iptables
+  community.general.pacman:
+    name:
+      - iptables
+      - ulogd
+    state: present
+  register: task_result
+  until: task_result is success
+  retries: 10
+
+- name: Configure ipv4 iptables
+  ansible.builtin.template: 
+    src: iptables.rules.j2 
+    dest: /etc/iptables/iptables.rules
+  notify:
+    - start iptables
+
+- name: Configure ipv6 iptables
+  ansible.builtin.template: 
+    src: ip6tables.rules.j2 
+    dest: /etc/iptables/ip6tables.rules
+  notify:
+    - start ip6tables

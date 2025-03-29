@@ -1,0 +1,9 @@
+---
+
+- name: Install Alacritty terminal
+  pacman:
+    name: alacritty
+
+- name: Install tmux
+  pacman:
+    name: tmux

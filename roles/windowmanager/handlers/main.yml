@@ -1,0 +1,4 @@
+---
+
+- name: enable cosmic
+  service: name=cosmic-greeter.service state=started enabled=true

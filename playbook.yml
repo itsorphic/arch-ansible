@@ -1,0 +1,19 @@
+---
+
+- name: Install Arch Linux Environment
+  hosts: hosts
+  connection: local
+  become: true
+
+  roles:
+    - { role: network, tags: ['network'] }
+    - { role: base, tags: ['base'] }
+    - { role: firewall, tags: ['firewall'] }
+    #- { role: dotfiles, tags: ['dotfiles'] }
+    - { role: shell, tags: ['shell'] }
+    - { role: editor, tags: ['editor'] }
+    - { role: terminal, tags: ['terminal'] }
+    - { role: browsers, tags: ['browsers'] }
+    - { role: windowmanager, tags: ['windowmanager'] }
+    - { role: keepass, tags: ['keepass'] }
+    - { role: sound, tags: ['sound'] }

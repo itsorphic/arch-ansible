@@ -1,0 +1,11 @@
+---
+
+- name: Install zsh with completion and syntax highlighting
+  pacman:
+    name:
+      - zsh
+      - zsh-completions
+      - zsh-syntax-highlighting
+      - zsh-autosuggestions
+    state: present
+  notify: change shell

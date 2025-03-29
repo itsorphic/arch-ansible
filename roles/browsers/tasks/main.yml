@@ -1,0 +1,11 @@
+---
+
+- name: Install firefox
+  pacman: name=firefox state=present
+  tags:
+    - firefox
+
+- name: Install Brave
+  become: true
+  become_user: "{{ user.name }}"
+  command: paru -S brave

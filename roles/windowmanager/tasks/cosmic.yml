@@ -1,0 +1,9 @@
+---
+
+- name: Install Cosmic DE
+  pacman:
+    name:
+      - cosmic-session
+      - cosmic-greeter
+  notify:
+    - enable cosmic

@@ -1,0 +1,13 @@
+---
+
+- name: start iptables
+  ansible.builtin.service: name=iptables.service state=started enabled=true
+
+- name: reload iptables
+  ansible.builtin.service: name=iptables.service state=reloaded
+
+- name: start ip6tables
+  ansible.builtin.service: name=ip6tables.service state=started enabled=true
+
+- name: reload ip6tables
+  ansible.builtin.service: name=ip6tables.service state=reloaded

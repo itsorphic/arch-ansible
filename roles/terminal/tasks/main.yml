@@ -1,0 +1,4 @@
+---
+
+- import_tasks: terminal.yml
+  name: terminal
